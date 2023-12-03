@@ -1,4 +1,8 @@
-import { FETCH_COMMENTS_SUCCESS, CommentActions } from './commentActions';
+import {
+  FETCH_COMMENTS_SUCCESS,
+  UPDATE_COMMENT_SUCCESS,
+  CommentActions,
+} from './commentActions';
 import { CommentData } from '@/src/types';
 
 interface CommentsState {
@@ -19,6 +23,22 @@ export default function commentReducer(
         ...state,
         comments: action.payload,
       };
+    }
+    case UPDATE_COMMENT_SUCCESS: {
+      const updatedComments = [...state.comments];
+
+      const commentIndex = state.comments.findIndex(
+        (comment) => comment.id === action.payload.id,
+      );
+
+      if (commentIndex !== -1) {
+        updatedComments[commentIndex] = action.payload;
+
+        return {
+          ...state,
+          comments: updatedComments,
+        };
+      }
     }
     default:
       return state;

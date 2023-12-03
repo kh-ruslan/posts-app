@@ -1,8 +1,12 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { PostData } from '@/src/types';
+import { Post } from '@/src/types';
 import PostCard from './PostCard';
 
-const PostListItem = (post: PostData) => {
+interface Props {
+  post: Post;
+}
+
+const PostListItem: React.FC<Props> = ({ post }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -19,7 +23,7 @@ const PostListItem = (post: PostData) => {
 
   return (
     <li className="mb-8" onClick={handleClickPost(post.id)}>
-      <PostCard isSelected={isSelected} {...post} />
+      <PostCard isSelected={isSelected} post={post} />
     </li>
   );
 };

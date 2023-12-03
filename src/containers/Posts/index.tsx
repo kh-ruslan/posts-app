@@ -79,7 +79,7 @@ const Posts: React.FC = () => {
         <>
           <ul className={postListStyle}>
             {posts.map((post) => (
-              <PostListItem key={post.id} {...post} />
+              <PostListItem key={post.id} post={post} />
             ))}
           </ul>
 

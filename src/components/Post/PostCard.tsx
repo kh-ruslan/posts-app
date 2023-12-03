@@ -2,7 +2,14 @@ import React, { memo } from 'react';
 import { Post } from '@/src/types';
 import { Card, CardContent } from '@mui/material';
 
-const PostCard: React.FC<Post> = ({ title, body, userName, isSelected }) => {
+interface Props {
+  post: Post;
+  isSelected: boolean;
+}
+
+const PostCard: React.FC<Props> = ({ post, isSelected }) => {
+  const { title, body, userName } = post;
+
   return (
     <Card
       sx={{

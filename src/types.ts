@@ -31,7 +31,11 @@ export interface PostData {
 
 export interface Post extends PostData {
   userName?: string;
-  isSelected?: boolean;
+}
+
+interface Reply {
+  userName: string;
+  text: string;
 }
 
 export interface CommentData {
@@ -40,4 +44,5 @@ export interface CommentData {
   name: string;
   email: string;
   body: string;
+  replies: Reply[];
 }

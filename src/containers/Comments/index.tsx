@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Comment from '@/src/components/Comment';
+import CommentItem from '@/src/components/Comment/CommentItem';
 import Loader from '@/src/components/Loader';
 import { CommentData } from '@/src/types';
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
@@ -32,16 +32,18 @@ const Comments: React.FC = () => {
       .finally(() => setIsFetching(false));
   }, [selectedPostId]);
 
-  const commentListStyle = `mt-4 pr-4 ${isFetching ? 'blur-sm' : ''}`;
+  const commentListStyle = `overflow-auto h-full mt-4 pr-4 ${
+    isFetching ? 'blur-sm' : ''
+  }`;
 
   return (
-    <section className="relative">
+    <section className="relative overflow-hidden h-full pb-10">
       <h2>Comments</h2>
 
       <ul className={commentListStyle}>
         {comments.map((comment) => (
           <li className="mb-8" key={comment.id}>
-            <Comment {...comment} />
+            <CommentItem comment={comment} />
           </li>
         ))}
       </ul>
