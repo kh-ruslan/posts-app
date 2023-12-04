@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { Button, TextField } from '@mui/material';
-import { CommentData } from '@/src/types';
+import { Button } from '@mui/material';
+import { CommentData, Tag } from '@/src/types';
 import { useAppDispatch } from '@/lib/redux/hooks';
 import { updateCommentSuccess } from '@/lib/redux/features/comments/commentActions';
+import TagInput from './TagInput';
 
 interface Props {
   comment: CommentData;
 }
 
-const ReplySection: React.FC<Props> = ({ comment }) => {
-  const { id, replies = [] } = comment;
+const AddTags: React.FC<Props> = ({ comment }) => {
+  const { id } = comment;
 
-  const [replyText, setReplyText] = useState('');
-  const [showReplyInput, setShowReplyInput] = useState(false);
+  const [value, setValue] = React.useState<Tag[]>([]);
+  const [showTagsInput, setShowTagsInput] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -23,10 +24,7 @@ const ReplySection: React.FC<Props> = ({ comment }) => {
     fetch(`https://jsonplaceholder.typicode.com/comments/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({
-        reply: {
-          userName: 'Me',
-          text: replyText,
-        },
+        tags: value,
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -36,7 +34,7 @@ const ReplySection: React.FC<Props> = ({ comment }) => {
       .then((res) => {
         const updatedComment = {
           ...comment,
-          replies: [...replies, res.reply],
+          tags: res.tags,
         };
 
         dispatch(updateCommentSuccess(updatedComment));
@@ -45,36 +43,25 @@ const ReplySection: React.FC<Props> = ({ comment }) => {
         console.error('Error while updating comment', err);
       })
       .finally(() => {
-        setReplyText('');
-        setShowReplyInput(false);
+        setShowTagsInput(false);
         setIsUpdating(false);
       });
   };
 
-  return (
-    <>
-      <p
-        className="text-blue-500 cursor-pointer"
-        onClick={() => setShowReplyInput(!showReplyInput)}
-      >
-        Reply
-      </p>
+  const handleClickTags = () => setShowTagsInput(!showTagsInput);
 
-      {showReplyInput && (
+  return (
+    <div className="my-4">
+      <Button variant="text" onClick={handleClickTags}>
+        Tags
+      </Button>
+
+      {showTagsInput && (
         <>
-          <TextField
-            sx={{ margin: '16px 0' }}
-            fullWidth
-            variant="standard"
-            placeholder="Enter reply"
-            value={replyText}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setReplyText(event.target.value)
-            }
-          />
+          <TagInput value={value} onChange={(newValue) => setValue(newValue)} />
 
           <Button
-            disabled={!replyText || isUpdating}
+            disabled={isUpdating}
             variant="contained"
             onClick={handleSubmitReply}
           >
@@ -82,8 +69,8 @@ const ReplySection: React.FC<Props> = ({ comment }) => {
           </Button>
         </>
       )}
-    </>
+    </div>
   );
 };
 
-export default ReplySection;
+export default AddTags;

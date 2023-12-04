@@ -33,9 +33,14 @@ export interface Post extends PostData {
   userName?: string;
 }
 
-interface Reply {
+export interface Reply {
   userName: string;
   text: string;
+}
+
+export interface Tag {
+  title: string;
+  inputValue?: string;
 }
 
 export interface CommentData {
@@ -45,4 +50,5 @@ export interface CommentData {
   email: string;
   body: string;
   replies: Reply[];
+  tags: Tag[];
 }
