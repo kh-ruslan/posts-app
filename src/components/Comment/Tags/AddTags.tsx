@@ -50,6 +50,8 @@ const AddTags: React.FC<Props> = ({ comment }) => {
 
   const handleClickTags = () => setShowTagsInput(!showTagsInput);
 
+  const isDisabled = isUpdating || (!comment?.tags?.length && !value.length);
+
   return (
     <div className="my-4">
       <Button variant="text" onClick={handleClickTags}>
@@ -61,7 +63,7 @@ const AddTags: React.FC<Props> = ({ comment }) => {
           <TagInput value={value} onChange={(newValue) => setValue(newValue)} />
 
           <Button
-            disabled={isUpdating}
+            disabled={isDisabled}
             variant="contained"
             onClick={handleSubmitReply}
           >

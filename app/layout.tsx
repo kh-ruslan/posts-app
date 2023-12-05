@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Providers } from '@/lib/providers';
+import { CssBaseline } from '@mui/material';
 
 import './globals.css';
 import '@fontsource/roboto/300.css';
@@ -19,6 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <Providers>
+      <CssBaseline />
       <html lang="en">
         <body>{children}</body>
       </html>
