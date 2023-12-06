@@ -16,7 +16,9 @@
   }
 }
 
-body {
+/* Workaround to fix Next.js issue while global css overrides custom css */
+/* https://github.com/vercel/next.js/issues/16630 */
+html > body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
