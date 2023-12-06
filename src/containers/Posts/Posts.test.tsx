@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor } from '@testing-library/react';
+import { render, waitFor, screen } from '@testing-library/react';
 import { useSearchParams } from 'next/navigation';
 import { Providers } from '@/lib/providers';
 import { Post, UserData } from '@/src/types';
@@ -58,7 +58,7 @@ getAllMock.mockReturnValue([]);
 
 describe('Posts', () => {
   it('should show post list', async () => {
-    const { getByText } = render(
+    render(
       <Providers>
         <Posts />
       </Providers>,
@@ -67,13 +67,13 @@ describe('Posts', () => {
     // Firstly fetch 'posts', secondary fetch 'users'
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
 
-    const firstPostTitle = getByText('Post#1');
-    const firstPostBody = getByText('this is post #1 body');
-    const firstPostAuthor = getByText('John');
+    const firstPostTitle = screen.getByText('Post#1');
+    const firstPostBody = screen.getByText('this is post #1 body');
+    const firstPostAuthor = screen.getByText('John');
 
-    const secondPostTitle = getByText('Post#2');
-    const secondPostBody = getByText('this is post #2 body');
-    const secondPostAuthor = getByText('Mary');
+    const secondPostTitle = screen.getByText('Post#2');
+    const secondPostBody = screen.getByText('this is post #2 body');
+    const secondPostAuthor = screen.getByText('Mary');
 
     expect(firstPostTitle).toBeInTheDocument();
     expect(firstPostBody).toBeInTheDocument();

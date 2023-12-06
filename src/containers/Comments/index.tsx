@@ -34,7 +34,7 @@ const Comments: React.FC = () => {
         console.error('Error while fetching comments', err);
       })
       .finally(() => setIsFetching(false));
-  }, [selectedPostId]);
+  }, [selectedPostId, dispatch]);
 
   const commentListStyle = `overflow-auto h-full mt-4 pr-4 ${
     isFetching ? 'blur-sm' : ''

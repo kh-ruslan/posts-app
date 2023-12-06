@@ -58,7 +58,7 @@ const Posts: React.FC = () => {
         console.error('Error while fetching posts', err);
       })
       .finally(() => setIsFetchingPosts(false));
-  }, [postsQuery]);
+  }, [postsQuery, dispatch]);
 
   // fetch users
   useEffect(() => {
@@ -68,7 +68,7 @@ const Posts: React.FC = () => {
       .catch((err) => {
         console.error('Error while fetching users', err);
       });
-  }, []);
+  }, [dispatch]);
 
   const posts: Post[] = useMemo(() => {
     return postList.map((post) => ({

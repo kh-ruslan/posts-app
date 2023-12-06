@@ -19,11 +19,11 @@ describe('Tag input', () => {
       />,
     );
 
-    await act(async () => {
-      const tagsInput = screen.getByRole('combobox');
-      await user.type(tagsInput, 't');
+    const tagsInput = screen.getByRole('combobox');
+    const tagSuggestion = screen.getByText('Towels');
 
-      const tagSuggestion = screen.getByText('Towels');
+    await act(async () => {
+      await user.type(tagsInput, 't');
       await user.click(tagSuggestion);
     });
 
@@ -53,11 +53,11 @@ describe('Tag input', () => {
       />,
     );
 
-    await act(async () => {
-      const tagsInput = screen.getByRole('combobox');
-      await user.type(tagsInput, 'custom tag');
+    const tagsInput = screen.getByRole('combobox');
+    const tagSuggestion = screen.getByText('custom tag');
 
-      const tagSuggestion = screen.getByText('custom tag');
+    await act(async () => {
+      await user.type(tagsInput, 'custom tag');
       await user.click(tagSuggestion);
     });
 
