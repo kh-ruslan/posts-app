@@ -44,7 +44,7 @@ const Posts: React.FC = () => {
         // Get total pages count from response headers
         const pagesCount =
           res.headers
-            .get('Link')
+            ?.get('Link')
             ?.match(/page=.../g)
             ?.slice(-1)[0]
             ?.match(/\d+/g)?.[0] || 1;

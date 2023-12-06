@@ -15,9 +15,12 @@ const Comments: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const comments = useAppSelector((state) => state.comments.comments);
-  const posts = useAppSelector((state) => state.posts.posts);
 
   useEffect(() => {
+    if (!selectedPostId) {
+      return;
+    }
+
     setIsFetching(true);
 
     fetch(
@@ -37,13 +40,17 @@ const Comments: React.FC = () => {
     isFetching ? 'blur-sm' : ''
   }`;
 
-  const showEmptyState = comments.length === 0 && posts.length > 0;
-
   return (
     <section className="relative overflow-hidden h-full pb-14">
       <h2>Comments</h2>
 
-      {comments.length > 0 && (
+      {!selectedPostId && (
+        <p className="mt-4">
+          <i>Select a post to see the comments</i>
+        </p>
+      )}
+
+      {comments.length > 0 && !!selectedPostId && (
         <ul className={commentListStyle}>
           {comments.map((comment) => (
             <li className="mb-8" key={comment.id}>
@@ -51,12 +58,6 @@ const Comments: React.FC = () => {
             </li>
           ))}
         </ul>
-      )}
-
-      {showEmptyState && (
-        <p className="mt-4">
-          <i>Select a post to see the comments</i>
-        </p>
       )}
 
       {isFetching && <Loader />}

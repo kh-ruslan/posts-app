@@ -25,20 +25,17 @@ export default function commentReducer(
       };
     }
     case UPDATE_COMMENT_SUCCESS: {
-      const updatedComments = [...state.comments];
+      const updatedComments = state.comments.map((comment) => {
+        if (comment.id === action.payload.id) {
+          return action.payload;
+        }
+        return comment;
+      });
 
-      const commentIndex = state.comments.findIndex(
-        (comment) => comment.id === action.payload.id,
-      );
-
-      if (commentIndex !== -1) {
-        updatedComments[commentIndex] = action.payload;
-
-        return {
-          ...state,
-          comments: updatedComments,
-        };
-      }
+      return {
+        ...state,
+        comments: updatedComments,
+      };
     }
     default:
       return state;

@@ -69,6 +69,7 @@ const AddReply: React.FC<Props> = ({ comment }) => {
       {showReplyInput && (
         <>
           <TextField
+            autoFocus
             sx={{ margin: '16px 0' }}
             fullWidth
             variant="standard"

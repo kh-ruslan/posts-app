@@ -78,7 +78,7 @@ const TagInput: React.FC<Props> = ({ value, onChange }) => {
       freeSolo
       multiple
       renderInput={(params) => (
-        <TextField {...params} label="Enter tag" variant="standard" />
+        <TextField {...params} autoFocus label="Enter tag" variant="standard" />
       )}
     />
   );
