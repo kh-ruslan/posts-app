@@ -28,12 +28,13 @@ const TagInput: React.FC<Props> = ({ value, onChange }) => {
               title: newValue,
             },
           ]);
-        } else if (newValue && newValue.inputValue) {
+          // TODO: apply a right type instead of 'any' (need to investigate, looks like MUI issue)
+        } else if (newValue && (newValue as any).inputValue) {
           // Create a new value from the user input
           onChange([
             ...value,
             {
-              title: newValue.inputValue,
+              title: (newValue as any).inputValue,
             },
           ]);
         } else {
